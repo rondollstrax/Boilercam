@@ -1,0 +1,53 @@
+<html>
+<head>
+<style>
+
+html, body {
+    margin: 0; padding: 0;
+}
+#on {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 200px;
+}
+
+</style>
+
+<script type="text/javascript">
+function readJsonFile(file, callback) {
+    var rawFile = new XMLHttpRequest();
+    rawFile.overrideMimeType("application/json");
+    rawFile.open("GET", file, true);
+    rawFile.onreadystatechange = function() {
+        if (rawFile.readyState === 4 && rawFile.status == "200") {
+            callback(rawFile.responseText);
+        }
+    }
+    rawFile.send(null);
+}
+
+//usage:
+readJsonFile("boiler.json", function(text){
+    let data = JSON.parse(text);
+    let textEle = document.getElementById("on");
+    if (data["isTheBoilerOn"] == true)
+	textEle.innerHTML = "Yes.";
+    else if (data["isTheBoilerOn"] == false)
+	textEle.innerHTML = "No.";
+    else if (data["isTheBoilerOn"] === "Maintenance")
+	textEle.innerHTML = "Under maintenance.";
+    else
+	textEle.innerHTML = "Maybe.";
+});
+</script>
+
+</head>
+<body>
+<center>
+<div id="on"></div>
+</center>
+</body>
+</html>

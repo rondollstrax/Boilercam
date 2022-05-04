@@ -1,0 +1,21 @@
+{
+    "camera": {
+        "addr": <IP_ADDR>,
+        "port": <PORT>,
+        "user": <USER>,
+        "pass": <PASSOWRD>,
+        "stream": "stream1",
+        "zoom_cube": {
+            "length": 20,
+            "hori_start": 878,
+            "vert_start": 668 
+            }
+    },
+    "site_host": {
+        "scheme": "http",
+        "addr": <REMOTE_SITE_ADDR>,
+        "port": <PORT>,
+        "auth_token": <TOKEN>
+    }
+
+}
