@@ -41,7 +41,7 @@ class BoilerCam:
         return j
 
     def write_boiler_state(self, is_on):
-        self.is_the_boiler_one = is_on
+        self.is_the_boiler_on = is_on
         with open(self.json_file, 'w') as jsonfile:
             json.dump({'isTheBoilerOn': is_on}, jsonfile)
 
