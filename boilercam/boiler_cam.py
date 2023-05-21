@@ -3,6 +3,7 @@
 import time
 import os
 import json
+import requests
 
 from pathlib import Path
 
@@ -19,7 +20,6 @@ class BoilerUpdater:
         self.auth = config['auth_token']
 
     def send(self, is_on):
-        return
         body = {"on": "1" if is_on else "0"}
         headers = {"Authorization": self.auth}
         try:
