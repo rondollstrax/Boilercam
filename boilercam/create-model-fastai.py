@@ -1,8 +1,8 @@
-from pathlib import Path
+#from pathlib import Path
 from fastai.vision.all import *
 from utils import label_func
 
-path = Path(__file__).parent
+#path = Path(__file__).parent
 
 path = '.'  # Needed in order to avoid serializing OS specific Path properties, so that this is cross platform
 
