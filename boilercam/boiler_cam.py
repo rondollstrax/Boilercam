@@ -7,17 +7,19 @@ import json
 from pathlib import Path
 
 from camera_manager import CameraManager
-from image_classifier import ImageClassifier
-from config import get_config()
+# from image_classifier import ImageClassifier
+from fastai_classifier import FastAIClassifier
+from config import get_config
 
 class BoilerUpdater:
     def __init__(self):
         config = get_config()['site_host']
-        self.port = self.config['port']
+        self.port = config['port']
         self.addr = f"{config['scheme']}://{config['addr']}"
         self.auth = config['auth_token']
 
     def send(self, is_on):
+        return
         body = {"on": "1" if is_on else "0"}
         headers = {"Authorization": self.auth}
         try:
@@ -30,9 +32,10 @@ class BoilerUpdater:
 class BoilerCam:
     def __init__(self):
         self.json_file = os.path.join(Path(__file__).parent, 'site', 'boiler.json')
-        self.is_the_boiler_on = self.read_json()['isTheBoilerOn']
+        self.is_the_boiler_on = False and self.read_json()['isTheBoilerOn']
         self.camera_manager = CameraManager()
-        self.image_classifier = ImageClassifier()
+        #self.image_classifier = ImageClassifier()
+        self.fast_ai_classifier = FastAIClassifier()
         self.boiler_updater = BoilerUpdater()
 
     def read_json(self):
@@ -41,13 +44,15 @@ class BoilerCam:
         return j
 
     def write_boiler_state(self, is_on):
+        return
         self.is_the_boiler_one = is_on
         with open(self.json_file, 'w') as jsonfile:
             json.dump({'isTheBoilerOn': is_on}, jsonfile)
 
     def run(self):
         image = self.camera_manager.snip()
-        is_on = bool(self.image_classifier.predict(image))
+        #is_on = bool(self.image_classifier.predict(image))
+        is_on = bool(self.fast_ai_classifier.predict(image))
         print('is_on is', is_on)
         print('comparing')
         if is_on != self.is_the_boiler_on:

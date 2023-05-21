@@ -1,20 +1,13 @@
-import requests
-import socket
 import base64
-import json
 import rtsp
 import time
 import sys
-import os
 
-from pathlib import Path
+from config import get_config
 
-from image_classifier import ImageClassifier
 
 class CameraManager:
     def __init__(self):
-        self.client = self.init_client()
-        self.image_classifier = ImageClassifier()
 
         config = get_config()["camera"]
 
@@ -25,8 +18,10 @@ class CameraManager:
         self.zoom_vert_start = config["zoom_cube"]["vert_start"]
         self.zoom_length = config["zoom_cube"]["length"]
 
+        self.client = self.init_client()
+
     def init_client(self):
-        client = rtsp.Client(rtsp_server_url=self.url, verbose=True)
+        client = rtsp.Client(rtsp_server_uri=self.url, verbose=True)
         sanity_start = time.time()
         while client.read() is None:
             time.sleep(1)
@@ -36,6 +31,7 @@ class CameraManager:
         return client
     
     def snip(self):
-        return self.client.read().crop((self.zoom_hori_start, self.zoom_vert_start, self.zoom_hori_start + self.zoom_length, self.zoom_vert_start + self.zoom_length))
+        img = self.client.read().crop((self.zoom_hori_start, self.zoom_vert_start, self.zoom_hori_start + self.zoom_length, self.zoom_vert_start + self.zoom_length))
+        return img
 
 
