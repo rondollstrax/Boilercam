@@ -32,7 +32,7 @@ class BoilerUpdater:
 class BoilerCam:
     def __init__(self):
         self.json_file = os.path.join(Path(__file__).parent, 'site', 'boiler.json')
-        self.is_the_boiler_on = False and self.read_json()['isTheBoilerOn']
+        self.is_the_boiler_on = self.read_json()['isTheBoilerOn']
         self.camera_manager = CameraManager()
         #self.image_classifier = ImageClassifier()
         self.fast_ai_classifier = FastAIClassifier()
@@ -44,7 +44,6 @@ class BoilerCam:
         return j
 
     def write_boiler_state(self, is_on):
-        return
         self.is_the_boiler_one = is_on
         with open(self.json_file, 'w') as jsonfile:
             json.dump({'isTheBoilerOn': is_on}, jsonfile)
