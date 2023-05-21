@@ -1,14 +1,15 @@
-from fastai.learner import load_learner
+from fastai.vision.all import vision_learner
 from pathlib import Path
-from utils import label_func
+from utils import get_learner
 
 PATH = Path(__file__).parent
-MODEL_PATH = PATH / 'fastai_model.pkl'
+MODEL_PATH = PATH / 'fastai_model'
 
 
 class FastAIClassifier:
     def __init__(self):
-        self.learn = load_learner(MODEL_PATH)
+        self.learn = get_learner()
+        self.learn.load(MODEL_PATH)
 
     def predict(self, pil_image):
         _, _, probs = self.learn.predict(pil_image)
